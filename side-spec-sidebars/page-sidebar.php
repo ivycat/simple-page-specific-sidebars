@@ -6,7 +6,7 @@
  *  Description: Add a sidebar to any specific page by creating a widget area on demand.
  *  Author: IvyCat Web Services
  *  Author URI: http://www.ivycat.com
- *  Version: 2.12
+ *  Version: 2.13
  *  License: GPLv3
  **/
 

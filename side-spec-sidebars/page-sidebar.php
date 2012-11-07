@@ -136,7 +136,7 @@ class DGPageSidebarCustom{
     public function build_sidebars(){
         $pages = self::get_pages();
         $stop = count( $pages );
-        $count;
+        $count = 0;
         foreach( $pages as $page ): $count++; 
         if( $count <= $stop ){
             $args = array(

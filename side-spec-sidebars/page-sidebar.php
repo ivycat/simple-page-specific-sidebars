@@ -74,6 +74,7 @@ class DGPageSidebarCustom{
 */
     public function option_page(){
         if( $_SERVER['REQUEST_METHOD'] == 'POST' ) self::page_sidebar_settings_save();
+		global $wp_registered_sidebars;
         require_once 'assets/page-sidebar-options-view.php';
     }
     

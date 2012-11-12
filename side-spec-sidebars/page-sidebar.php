@@ -86,7 +86,15 @@ class DGPageSidebarCustom{
     
     public function set_opts(){
         $this->home_pg_id = ( $home = get_option( 'page_sidebar_home_id' ) ) ? $home : self::home_pg_id();
-        $this->widget_name = ( $widget = get_option( 'page_sidebar_widget_name' ) ) ? trim( $widget ) : 'sidebar-1';
+		global $wp_registered_sidebars;
+		$sidebar = '';
+		foreach( $wp_registered_sidebars as $slug => $data ){
+			if( !preg_match( '`page-sidebar-`', $slug ) ){
+				$sidebar = $slug;
+				break;
+			}
+		}
+        $this->widget_name = ( $widget = get_option( 'page_sidebar_widget_name' ) ) ? trim( $widget ) : $sidebar;
     }
     
     public function add_page_meta_box(){

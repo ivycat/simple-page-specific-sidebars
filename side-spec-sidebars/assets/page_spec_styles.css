@@ -60,7 +60,9 @@
     line-height: 1.4em;
     padding:0 ;
 }
-
+.postbox .inside p{
+	padding-left: 5px;
+}
 .postbox .inside_wrap{
     margin:0 15px;
 }
@@ -235,5 +237,13 @@
 #mc_embed_signup label.error {
     display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;
     }
-
+#custom-sidebar{
+	padding: 5px;
+}
+.hidden-h{
+	display:none;
+}
+.custom-sidebar, .sidebar-add{
+	margin-left: 15px;
+}
 

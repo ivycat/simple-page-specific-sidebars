@@ -17,19 +17,22 @@
                 <?php //parent::fprint_r( $this->valid->all_formdata() ); ?>
                 <form action="" method="post">
                     <ul>
-                        <li><label for="primary-slug">Primary Sidebar Slug</label></li>
+                        <li><label for="primary-slug">Primary Sidebar</label></li>
                         <li><?php
 							if( is_array( $wp_registered_sidebars ) ): ?>
 								<select id="primary-slug" name="primary_sidebar_slug"><?php
-									foreach( $wp_registered_sidebars as $slug => $sidebar ): ?>
-									<option value="<?php echo $slug . '"' . selected( $slug, $this->widget_name, false ); ?>><?php
-									echo $sidebar['name']; ?>
-									</option><?php
+									foreach( $wp_registered_sidebars as $slug => $sidebar ):
+										if( !preg_match( '`page-sidebar-`', $slug ) ): ?>
+											<option value="<?php echo $slug . '"' . selected( $slug, $this->widget_name, false ); ?>><?php
+											echo $sidebar['name']; ?>
+											</option><?php
+										endif;
 									endforeach; ?>
 								</select><?php
 							else: ?>
 								It appears you have no sidebars registered with this theme.<?php
-							endif; ?></li>
+							endif; ?>
+						</li>
                         <li><label for="home-id">Home Page ID *</label></li>
                         <li><input id="home-id" type="text" name="home_page_id" value="<?php echo $this->home_pg_id; ?>"/></li>
                         <li>* - Home page with blog posts have issues with the page ID being overridden.  This ensures that the right page ID is being used. (optional)</li>

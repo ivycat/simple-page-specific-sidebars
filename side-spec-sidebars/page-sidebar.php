@@ -6,7 +6,7 @@
  *  Description: Add a sidebar to any specific page by creating a widget area on demand.
  *  Author: IvyCat Web Services
  *  Author URI: http://www.ivycat.com
- *  Version: 2.13
+ *  Version: 2.3.0
  *  License: GPLv3
  **/
 
@@ -103,24 +103,58 @@ class DGPageSidebarCustom{
     }
     
     public function custom_page_meta(){
-        global $post;
+        global $post, $wp_registered_sidebars;
         $is_custom = get_post_meta( $post->ID, 'is_custom', true );
-        $add2chk = ( get_post_meta( $post->ID, 'add2sidebar', true ) ) ? 'checked="checked"' : '';
-        $checked = ($is_custom == 'y') ? ' checked="checked"' : '' ;
+		$add2sb = get_post_meta( $post->ID, 'add2sidebar', true ) ? true : false;
+        $add2chk = ( $add2sb ) ? 'checked="checked"' : '';
+        $checked = ( $is_custom == 'y' ) ? ' checked="checked"' : '' ;
+		$prepend = ( get_post_meta( $post->ID, 'prepend_to_sidebar', true ) == 'prepend' ) ? true : false;
+		$sb_group = ( $group = get_post_meta( $post->ID, 'use_sidebar_group', true ) ) ? $group : false;
+		self::load_assets();
         ?>
-            <div class="group">
+            <div class="group" id="custom-sidebar">
                 <ul>
-                    <li>
-                        <strong>Has Custom Sidebar: </strong>
-                    </li>
-                    <li>
-                        <input id="iscustom" type="checkbox" name="is-custom" value="y"<?php echo $checked; ?>/>
-                        <label for="iscustom">Yes </label>
-                    </li>
-                    <li class="add-replace">
-                        <input type="checkbox" id="addrplce" name="add2sidebar" value="add2chk"<?php echo $add2chk; ?>/>
-                        <label for="addrplce">Add to sidebar rather than replace: <label>
-                    </li>
+					<li>
+						<input id="iscustom" type="checkbox" name="is-custom" value="y"<?php echo $checked; ?>/>
+                        <label for="iscustom"><strong>Has Custom Sidebar</strong></label>
+						<ul class="custom-sidebar<?php echo ( strlen( $checked ) > 0 ) ? '' : ' hidden-h';  ?>">
+							<li>
+								<input id="customsb" class="grpselect" type="radio" name="customsb" value="custom"<?php echo ( !$sb_group ) ? ' checked="checked"' : ''; ?>/>
+								<label for="customsb">Custom Sidebar </label>
+							</li>
+							<li>
+								<input id="groupsb" class="grpselect" type="radio" name="customsb" value="group"<?php echo ( $sb_group ) ? ' checked="checked"' : ''; ?>/>
+								<label for="groupsb">Use Existing Sidebar </label>
+								<ul class="existing-sidebars<?php echo ( !$sb_group ) ? ' hidden-h' : ''; ?>">
+									<li><?php
+										if( is_array( $wp_registered_sidebars ) ): ?>
+											<select id="primary-slug" name="primary_sidebar_slug"><?php
+												foreach( $wp_registered_sidebars as $slug => $sidebar ):?>
+													<option value="<?php echo $slug . '"' . selected( $slug, $sb_group, false ); ?>><?php
+													echo $sidebar['name']; ?>
+													</option><?php
+												endforeach; ?>
+											</select><?php
+										else: ?>
+											It appears you have no sidebars registered with this theme.<?php
+										endif; ?>
+									</li>
+								</ul>
+							</li>
+							<li class="add-replace">
+								<input type="checkbox" id="addrplce" name="add2sidebar" value="add2chk"<?php echo $add2chk; ?>/>
+								<label for="addrplce">Add to sidebar rather than replace: <label>
+								<ul class="sidebar-add <?php echo $add2sb ? '' : ' hidden-h'; ?>">
+									<li><label><input type="radio" name="pre-append" value="prepend"<?php echo $prepend ? ' checked="checked"' : ''  ?>/>
+										Prepend Sidebar (before)</label>
+									</li>
+									<li><label><input type="radio" name="pre-append" value="append"<?php echo !$prepend ? ' checked="checked"' : ''  ?>/>
+										Append Sidebar (after)</label>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
                 </ul>
             </div>
         <?php
@@ -130,51 +164,82 @@ class DGPageSidebarCustom{
     public function save_custom_page_meta(){
         if ( defined('DOING_AJAX') ) return;
         global $post;
+		$sb_group = ( $_POST['customsb'] == 'group' ) ? $_POST['primary_sidebar_slug'] : false;
         update_post_meta( $post->ID, 'is_custom', $_POST['is-custom'] );
         update_post_meta( $post->ID, 'add2sidebar', $_POST['add2sidebar'] );
+        update_post_meta( $post->ID, 'prepend_to_sidebar', $_POST['pre-append'] );
+        update_post_meta( $post->ID, 'use_sidebar_group', $sb_group );
     }
     
     public function build_sidebars(){
         $pages = self::get_pages();
         $stop = count( $pages );
         $count = 0;
-        foreach( $pages as $page ): $count++; 
-        if( $count <= $stop ){
-            $args = array(
-	        'name'          => __( $page->post_title ),
-	        'id'            => 'page-sidebar-'. $page->ID ,
-	        'description'   => '',
-		    'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
-		    'after_widget' => '</div></div>',
-		    'before_title' => '<h3 class="widget-title">',
-		    'after_title' => '</h3>' );
-	        
-	       register_sidebar( $args ); 
-	    }
+        foreach( $pages as $page ):
+			$sb_group = get_post_meta( $page->ID, 'use_sidebar_group', true );
+			$count++; 
+			if( $count <= $stop  && !$sb_group ){
+				$args = array(
+				'name'          => __( $page->post_title . ' Sidebar' ),
+				'id'            => 'page-sidebar-'. $page->ID ,
+				'description'   => '',
+				'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-wrap widget-inside">',
+				'after_widget' => '</div></div>',
+				'before_title' => '<h3 class="widget-title">',
+				'after_title' => '</h3>' );
+				
+			   register_sidebar( $args ); 
+			}
 	    endforeach;
     }
      
     public function hijack_sidebar( $sidebars=array() ){
+		if( did_action( 'sidebars_widgets' ) == 1 )
+			return $sidebars;
         global $wp_registered_widgets, $wp_registered_sidebars, $_wp_sidebars_widgets, $post;
         $sidebar_title = apply_filters( 'page-sidebar-title' , $this->widget_name );
+		
         if( !is_page() || is_admin() ) return $sidebars;
         $is_custom = get_post_meta( $post->ID, 'is_custom', true );
         $add2sidebar = get_post_meta( $post->ID, 'add2sidebar', true );
-        if( $is_custom != 'y'){
+		$prepend = ( get_post_meta( $post->ID, 'prepend_to_sidebar', true ) == 'prepend' ) ? true : false;
+		$sb_group = ( $group = get_post_meta( $post->ID, 'use_sidebar_group', true ) ) ? $group : false;
+        
+		if( $is_custom != 'y'){
             return $sidebars;
         }else{
-            
-            $sidebar_term = ( is_front_page() ) ? 'page-sidebar-' . self::home_pg_id() : 'page-sidebar-' . $post->ID;
+			if( $sb_group ):
+				//$sidebar_term = ();
+				$sidebar_term = $sb_group;
+			else:
+				$sidebar_term = ( is_front_page() ) ? 'page-sidebar-' . self::home_pg_id() : 'page-sidebar-' . $post->ID;
+			endif;
+			
             $sidebars_widgets = $_wp_sidebars_widgets;
             
             if( !array_key_exists( $sidebar_term, $sidebars_widgets) || count($_wp_sidebars_widgets[$sidebar_term]) < 1 ){
+				
                 return $sidebars; 
-            }else{
-                if( $sidebars_widgets['array_version'] != 3  ) return $sidebars;
-                if( $add2sidebar ){ 
-                    $sidebars[$sidebar_title] = ( is_array( $_wp_sidebars_widgets[$sidebar_term] ) ) ? array_merge( (array)$sidebars[$sidebar_title], $_wp_sidebars_widgets[$sidebar_term] ) : $sidebars[$sidebar_title];
+            
+			}else{
+                
+				if( $sidebars_widgets['array_version'] != 3  )
+					return $sidebars;
+                
+				if( $add2sidebar ){
+					$add_sidebar = (array)$sidebars[$sidebar_title];
+					if( is_array( $_wp_sidebars_widgets[$sidebar_term] ) ){
+						$sidebars[$sidebar_title] = ( $prepend )
+							? array_merge( $_wp_sidebars_widgets[$sidebar_term], $add_sidebar )
+							: array_merge( $add_sidebar, $_wp_sidebars_widgets[$sidebar_term] );
+					}else{
+						$sidebars[$sidebar_title] = $add_sidebar;
+					}
+                    
                 }else{
-                   $sidebars[$sidebar_title] = $_wp_sidebars_widgets[$sidebar_term]; 
+					
+                   $sidebars[$sidebar_title] = $_wp_sidebars_widgets[$sidebar_term];
+				   
                 }
                 return $sidebars;
             }

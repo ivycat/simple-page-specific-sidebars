@@ -62,18 +62,35 @@ Contact us if you want some more filters or actions added.  http://www.ivycat.co
 
 == Frequently Asked Questions ==
 
-Q: What is the point of this plugin?.  
-A: Some of our clients need the ability to easily create, and edit sidebars on a per-page basis using widgets.  This is our solution, and we hope it helps others too. :)
+= What is the point of this plugin? =
+
+Some of our clients need the ability to easily create, and edit sidebars on a per-page basis using widgets.  This is our solution, and we hope it helps others too. :)
 
 == Changelog ==
 
-* 2012-08-17 - v. 2.1.2 - Added author, updated short description.
-* 2012-08-17 - v. 2.1.1 - Added sidebar to settings page.  Documentation editing, housekeeping.
-* 2012-06-21 - Added help to settings page.
+= 2.2.0 =
+* Dropdown selection for sidebar on option page
+* Ability to prepend custom sidebar on default sidebar (previously only append)
+* Ability to allow the page to display an existing sidebar rather than create it's own
+
+= 2.1.3 =
+* Updated authors, links.
+
+= 2.1.2 =
+* Added author, updated short description.
+
+= 2.1.1 =
+* Added sidebar to settings page.  
+* Documentation editing, housekeeping.
+
+= 2.1 =
+* Added help to settings page.
 
 == Upgrade Notice ==
 
-Latest versions mean latest security, latest features and the best time!
+= 2.1.2 =
+
+No critical updates; just housekeeping.
 
 == Road Map ==
 

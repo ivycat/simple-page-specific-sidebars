@@ -7,4 +7,13 @@
         $( '.' + toshow ).show().addClass( 'current-tab' );
         return false;
     } );
+	$( '#addrplce' ).click( function(){
+		$( '.sidebar-add' ).toggle();
+	});
+	$( '#iscustom' ).click( function(){
+		$( '.custom-sidebar' ).toggle();	
+	});
+	$( '.grpselect' ).change( function(){
+		$( '.existing-sidebars' ).toggle();	
+	});
 });

@@ -71,6 +71,7 @@ Some of our clients need the ability to easily create, and edit sidebars on a pe
 * Ability to prepend custom sidebar on default sidebar (previously only append).
 * Ability to allow the page to display an existing sidebar rather than create it's own.
 * Updated license to GPL v2, included correct license file.
+* File & folder maintenance
 
 = 2.1.3 =
 * Updated authors, links.

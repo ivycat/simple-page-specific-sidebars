@@ -6,29 +6,28 @@
  *  Description: Add a sidebar to any specific page by creating a widget area on demand.
  *  Author: IvyCat Web Services
  *  Author URI: http://www.ivycat.com
- *  Version: 2.3.0
- *  License: GPLv3
- **/
+ *  Version: 2.2.0
+  *  License: GNU General Public License v2.0
+ *  License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ 
+ ------------------------------------------------------------------------
+    Simple Page Specific Sidebars, Copyright 2012 IvyCat, Inc. (admins@ivycat.com)
+    
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-/**
-------------------------------------------------------------------------
-Copyright 2011 IvyCat, Inc.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
-*/
+ */
 
 if( !defined( 'DGSIDEBAR_DIR' ) ) define( 'DGSIDEBAR_DIR', dirname( __FILE__ ) ) ;
 if( !defined( 'DGSIDEBAR_URL' ) ) define( 'DGSIDEBAR_URL', str_replace( ABSPATH, site_url( '/' ), DGSIDEBAR_DIR ) ) ;

@@ -53,14 +53,6 @@ use the Home page ID to get its sidebar. (uses is_frontpage() ) to check.
 
 Contact us if you want some more filters or actions added.  http://www.ivycat.com/contact
 
-## Screenshots ##
-
-###1. Selecting a page to have a unique sidebar is as easy as clicking a button - Also, check if you just want to merge the new sidebar with the old.###
-![Selecting a page to have a unique sidebar is as easy as clicking a button - Also, check if you just want to merge the new sidebar with the old.](http://s.wordpress.org/extend/plugins/simple-page-specific-sidebars/screenshot-1.png)
-
-###2. Your new sidebars show up under widgets.  No need to clutter up the Page editor.###
-![Your new sidebars show up under widgets.  No need to clutter up the Page editor.](http://s.wordpress.org/extend/plugins/simple-page-specific-sidebars/screenshot-2.png)
-
 
 ## Frequently Asked Questions ##
 

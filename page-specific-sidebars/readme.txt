@@ -4,7 +4,7 @@ Donate link: http://www.ivycat.com/contribute/
 Tags: page, widgets, sidebar, role based
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 2.2.0
+Stable tag: 2.14.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,14 +66,14 @@ Some of our clients need the ability to easily create, and edit sidebars on a pe
 
 == Changelog ==
 
-= 2.2.0 =
-* Dropdown selection for sidebar on option page.
+= 2.14.0 =
+* Dropdown selection for sidebar on option page.  Now you can re-use existing sidebars on other pages.
 * Ability to prepend custom sidebar on default sidebar (previously only append).
 * Ability to allow the page to display an existing sidebar rather than create it's own.
 * Updated license to GPL v2, included correct license file.
 * File & folder maintenance
 
-= 2.1.3 =
+= 2.13 =
 * Updated authors, links.
 
 = 2.1.2 =
@@ -87,6 +87,10 @@ Some of our clients need the ability to easily create, and edit sidebars on a pe
 * Added help to settings page.
 
 == Upgrade Notice ==
+
+= 2.14.0 =
+
+Cool feature updates; please upgrade.
 
 = 2.1.2 =
 

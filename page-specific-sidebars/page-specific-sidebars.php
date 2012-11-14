@@ -169,12 +169,15 @@ class DGPageSidebarCustom{
     
     
     public function save_custom_page_meta(){
-        if ( defined('DOING_AJAX') ) return;
+        if ( defined('DOING_AJAX') || !is_page() ) return;
         global $post;
-		$sb_group = ( $_POST['customsb'] == 'group' ) ? $_POST['primary_sidebar_slug'] : false;
-        update_post_meta( $post->ID, 'is_custom', $_POST['is-custom'] );
-        update_post_meta( $post->ID, 'add2sidebar', $_POST['add2sidebar'] );
-        update_post_meta( $post->ID, 'prepend_to_sidebar', $_POST['pre-append'] );
+	$sb_group = ( isset( $_POST['customsb'] ) && $_POST['customsb'] == 'group' ) ? $_POST['primary_sidebar_slug'] : false;
+        if( isset( $_POST['is_custom'] ) ) 
+		update_post_meta( $post->ID, 'is_custom', $_POST['is-custom'] );
+        if( isset( $_POST['add2sidebar'] ) ) 
+		update_post_meta( $post->ID, 'add2sidebar', $_POST['add2sidebar'] );
+        if( isset( $_POST['prepend_to_sidebar'] ) ) 
+		update_post_meta( $post->ID, 'prepend_to_sidebar', $_POST['pre-append'] );
         update_post_meta( $post->ID, 'use_sidebar_group', $sb_group );
     }
     

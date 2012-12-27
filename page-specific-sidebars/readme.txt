@@ -4,11 +4,9 @@ Donate link: http://www.ivycat.com/contribute/
 Tags: page, widgets, sidebar, role based
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: trunk
+Stable tag: 2.14.1
 License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
-==Short Description ==
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Add a sidebar to any specific page by creating a widget area on demand.
 
@@ -47,7 +45,7 @@ These allow you to change the location and priority of the metabox on the "Edit 
 
 `$home_slug = apply_filters( 'page-sidebar-homeslug', $home_slug )`
 
-Use this filter if your home page slug is different than "home" : 
+Use this filter if your home page slug is different from "home" : 
 
 NOTE: Any page that has a custom loop pulling in multiple posts will throw this plugin off.  For some reason it always outputs the post ID as the last
 post output on the page.  Also, the homepage is most likely the latest blog posts in WordPress so I created a check.  It will get the Home page ID and 
@@ -68,12 +66,17 @@ Some of our clients need the ability to easily create, and edit sidebars on a pe
 
 == Changelog ==
 
-= 2.2.0 =
-* Dropdown selection for sidebar on option page
-* Ability to prepend custom sidebar on default sidebar (previously only append)
-* Ability to allow the page to display an existing sidebar rather than create it's own
+= 2.14.1 =
+* Bug fixes updated JS & CSS.
 
-= 2.1.3 =
+= 2.14.0 =
+* Dropdown selection for sidebar on option page.  Now you can re-use existing sidebars on other pages.
+* Ability to prepend custom sidebar on default sidebar (previously only append).
+* Ability to allow the page to display an existing sidebar rather than create it's own.
+* Updated license to GPL v2, included correct license file.
+* File & folder maintenance
+
+= 2.13 =
 * Updated authors, links.
 
 = 2.1.2 =
@@ -87,6 +90,13 @@ Some of our clients need the ability to easily create, and edit sidebars on a pe
 * Added help to settings page.
 
 == Upgrade Notice ==
+
+= 2.14.1 =
+Bug fixes: please update right away.
+
+= 2.14.0 =
+
+Cool feature updates; please upgrade.
 
 = 2.1.2 =
 

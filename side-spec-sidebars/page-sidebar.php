@@ -41,7 +41,7 @@ class DGPageSidebarCustom{
     public function __construct(){
         self::set_opts();
         add_filter( 'plugin_action_links_'. plugin_basename( __FILE__ ), array( &$this, 'plugin_action_links' ), 10, 4 );
-        add_action( 'widgets_init', array( &$this, 'build_sidebars' ) );
+        add_action( 'wp_loaded', array( &$this, 'build_sidebars' ) );
         add_action( 'admin_init', array( &$this, 'add_page_meta_box' ) );
         add_action( 'save_post' , array( &$this, 'save_custom_page_meta' ) );
         add_filter( 'sidebars_widgets', array( &$this, 'hijack_sidebar' ) );
@@ -110,8 +110,8 @@ class DGPageSidebarCustom{
         );
     }
     
-    public function custom_page_meta(){
-        global $post, $wp_registered_sidebars;
+    public function custom_page_meta( $post ){
+        global $wp_registered_sidebars;
         $is_custom = get_post_meta( $post->ID, 'is_custom', true );
 		$add2sb = get_post_meta( $post->ID, 'add2sidebar', true ) ? true : false;
         $add2chk = ( $add2sb ) ? 'checked="checked"' : '';
@@ -164,19 +164,25 @@ class DGPageSidebarCustom{
 						</ul>
 					</li>
                 </ul>
-            </div>
-        <?php
+            </div><?php
+        wp_nonce_field( 'save-page-sidebar_' . $post->ID, 'ivycat_page_sidebar_nonce' );
     }
-    
-    
-    public function save_custom_page_meta(){
-        if ( defined('DOING_AJAX') ) return;
-        global $post;
-		$sb_group = ( $_POST['customsb'] == 'group' ) ? $_POST['primary_sidebar_slug'] : false;
-        update_post_meta( $post->ID, 'is_custom', $_POST['is-custom'] );
-        update_post_meta( $post->ID, 'add2sidebar', $_POST['add2sidebar'] );
-        update_post_meta( $post->ID, 'prepend_to_sidebar', $_POST['pre-append'] );
-        update_post_meta( $post->ID, 'use_sidebar_group', $sb_group );
+
+
+    public function save_custom_page_meta( $post_id, $post ) {
+        if ( 
+            defined( 'DOING_AJAX' ) || 
+            ! wp_verify_nonce( $_POST['ivycat_page_sidebar_nonce'], 'save-page-sidebar_' . $post_id )
+        ) 
+            return;
+        $sb_group = ( isset( $_POST['customsb'] ) && 'group' == $_POST['customsb'] ) ? $_POST['primary_sidebar_slug'] : false;
+        if ( isset( $_POST['is-custom'] ) )
+            update_post_meta( $post_id, 'is_custom', $_POST['is-custom'] );
+        if ( isset( $_POST['add2sidebar'] ) )
+            update_post_meta( $post_id, 'add2sidebar', $_POST['add2sidebar'] );
+        if ( isset( $_POST['pre-append'] ) )
+            update_post_meta( $post_id, 'prepend_to_sidebar', $_POST['pre-append'] );
+        update_post_meta( $post_id, 'use_sidebar_group', $sb_group );
     }
     
     public function build_sidebars(){

@@ -42,7 +42,7 @@ class DGPageSidebarCustom{
         add_filter( 'plugin_action_links_'. plugin_basename( __FILE__ ), array( &$this, 'plugin_action_links' ), 10, 4 );
         add_action( 'wp_loaded', array( &$this, 'build_sidebars' ) );
         add_action( 'admin_init', array( &$this, 'add_page_meta_box' ) );
-        add_action( 'save_post' , array( &$this, 'save_custom_page_meta' ) );
+        add_action( 'save_post' , array( &$this, 'save_custom_page_meta' ), 10, 2 );
         add_filter( 'sidebars_widgets', array( &$this, 'hijack_sidebar' ) );
         add_action('admin_menu', array(&$this, 'options_page_init') );
     }
@@ -169,8 +169,9 @@ class DGPageSidebarCustom{
 
     public function save_custom_page_meta( $post_id, $post ) {
         if ( 
-            defined( 'DOING_AJAX' ) || 
-            ! wp_verify_nonce( $_POST['ivycat_page_sidebar_nonce'], 'save-page-sidebar_' . $post_id )
+        	defined( 'DOING_AJAX' ) ||  
+		! isset( $_POST['ivycat_page_sidebar_nonce'] ) ||
+            	! wp_verify_nonce( $_POST['ivycat_page_sidebar_nonce'], 'save-page-sidebar_' . $post_id )
         ) 
             return;
         $sb_group = ( isset( $_POST['customsb'] ) && 'group' == $_POST['customsb'] ) ? $_POST['primary_sidebar_slug'] : false;

@@ -272,7 +272,7 @@ class DGPageSidebarCustom{
         $home_slug = 'home';
         $home_slug = apply_filters( 'page-sidebar-homeslug', $home_slug );
         $pg = get_page_by_path( $home_slug );
-        return $pg->ID;
+        return ( isset( $pg->ID ) ) ? $pg->ID : false;
     }
     
     protected function get_pages(){

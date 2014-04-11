@@ -42,15 +42,15 @@
             </div>
             <div class="group help inside">
                 <p>To use this plugin, simply got to a page you wish to overwrite or extend the sidebar on, and select the apropriate checkbox:</p>
-                <img src="<?php echo DGSIDEBAR_URL . '/screenshot-1.png'; ?>"/>
+                <img src="<?php echo DGSIDEBAR_URL . '/assets/screenshot-1.png'; ?>"/>
                 <p>Add the Widgets to the sidebar as you wish:</p>
-                <img src="<?php echo DGSIDEBAR_URL . '/screenshot-2.png'; ?>"/>
+                <img src="<?php echo DGSIDEBAR_URL . '/assets/screenshot-2.png'; ?>"/>
                 <p>
                     This Plugin is theme sensitive. That means the sidebar naming is dependant on the theme.  Some themes name the primary sidebar
                     "sidebar-primary", others name it "sidebar-1".  To find the name of the sidebar, simply right click on the primary sidebar (widget page)
                     and view the page source. See image below:
                 </p>
-                <img src="<?php echo DGSIDEBAR_URL . '/screenshot-3.png'; ?>"/>
+                <img src="<?php echo DGSIDEBAR_URL . '/assets/screenshot-3.png'; ?>"/>
                 <p>
                     Homepage ID is the post_id of your Homepage.  To find the page id, simply go to Pages->Home (orwhatever your home page is named) and click edit.
                     In the address bar of your browser, you'll see something like mysite.com/wp-admin/post.php?post=x  where x is some number.  That is the Page ID. 

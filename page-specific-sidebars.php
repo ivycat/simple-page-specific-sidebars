@@ -6,7 +6,7 @@
  *  Description: Add a sidebar to any specific page by creating a widget area on demand.
  *  Author: IvyCat Web Services
  *  Author URI: http://www.ivycat.com
- *  Version: 2.14.1
+ *  Version: 2.14.2
   *  License: GNU General Public License v2.0
  *  License URI: http://www.gnu.org/licenses/gpl-2.0.html
  
@@ -112,58 +112,64 @@ class DGPageSidebarCustom{
     public function custom_page_meta(){
         global $post, $wp_registered_sidebars;
         $is_custom = get_post_meta( $post->ID, 'is_custom', true );
-		$add2sb = get_post_meta( $post->ID, 'add2sidebar', true ) ? true : false;
+	$add2sb = get_post_meta( $post->ID, 'add2sidebar', true ) ? true : false;
         $add2chk = ( $add2sb ) ? 'checked="checked"' : '';
         $checked = ( $is_custom == 'y' ) ? ' checked="checked"' : '' ;
-		$prepend = ( get_post_meta( $post->ID, 'prepend_to_sidebar', true ) == 'prepend' ) ? true : false;
-		$sb_group = ( $group = get_post_meta( $post->ID, 'use_sidebar_group', true ) ) ? $group : false;
-		self::load_assets();
+        $prepend = ( get_post_meta( $post->ID, 'prepend_to_sidebar', true ) == 'prepend' ) ? true : false;
+        $sb_group = ( $group = get_post_meta( $post->ID, 'use_sidebar_group', true ) ) ? $group : false;
+        self::load_assets();
         ?>
-            <div class="group" id="custom-sidebar">
-                <ul>
-					<li>
-						<input id="iscustom" type="checkbox" name="is-custom" value="y"<?php echo $checked; ?>/>
-                        <label for="iscustom"><strong>Has Custom Sidebar</strong></label>
-						<ul class="custom-sidebar<?php echo ( strlen( $checked ) > 0 ) ? '' : ' hidden-h';  ?>">
-							<li>
-								<input id="customsb" class="grpselect" type="radio" name="customsb" value="custom"<?php echo ( !$sb_group ) ? ' checked="checked"' : ''; ?>/>
-								<label for="customsb">Custom Sidebar </label>
-							</li>
-							<li>
-								<input id="groupsb" class="grpselect" type="radio" name="customsb" value="group"<?php echo ( $sb_group ) ? ' checked="checked"' : ''; ?>/>
-								<label for="groupsb">Use Existing Sidebar </label>
-								<ul class="existing-sidebars<?php echo ( !$sb_group ) ? ' hidden-h' : ''; ?>">
-									<li><?php
-										if( is_array( $wp_registered_sidebars ) ): ?>
-											<select id="primary-slug" name="primary_sidebar_slug"><?php
-												foreach( $wp_registered_sidebars as $slug => $sidebar ):?>
-													<option value="<?php echo $slug . '"' . selected( $slug, $sb_group, false ); ?>><?php
-													echo $sidebar['name']; ?>
-													</option><?php
-												endforeach; ?>
-											</select><?php
-										else: ?>
-											It appears you have no sidebars registered with this theme.<?php
-										endif; ?>
-									</li>
-								</ul>
-							</li>
-							<li class="add-replace">
-								<input type="checkbox" id="addrplce" name="add2sidebar" value="add2chk"<?php echo $add2chk; ?>/>
-								<label for="addrplce">Add to sidebar rather than replace: <label>
-								<ul class="sidebar-add <?php echo $add2sb ? '' : ' hidden-h'; ?>">
-									<li><label><input type="radio" name="pre-append" value="prepend"<?php echo $prepend ? ' checked="checked"' : ''  ?>/>
-										Prepend Sidebar (before)</label>
-									</li>
-									<li><label><input type="radio" name="pre-append" value="append"<?php echo !$prepend ? ' checked="checked"' : ''  ?>/>
-										Append Sidebar (after)</label>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-                </ul>
-            </div>
+        <div class="group" id="custom-sidebar">
+            <ul>
+                <li>
+                    <input id="iscustom" type="checkbox" name="is-custom" value="y"<?php echo $checked; ?>/>
+                    <label for="iscustom"><strong>Has Custom Sidebar</strong></label>
+                    <ul class="custom-sidebar<?php echo ( strlen( $checked ) > 0 ) ? '' : ' hidden-h';  ?>">
+                        <li>
+                            <input id="customsb" class="grpselect" type="radio" name="customsb" value="custom"<?php echo ( !$sb_group ) ? ' checked="checked"' : ''; ?>/>
+                            <label for="customsb">Custom Sidebar </label>
+			</li>
+			<li>
+                            <input id="groupsb" class="grpselect" type="radio" name="customsb" value="group"<?php echo ( $sb_group ) ? ' checked="checked"' : ''; ?>/>
+                            <label for="groupsb">Use Existing Sidebar </label>
+                                <ul class="existing-sidebars<?php echo ( !$sb_group ) ? ' hidden-h' : ''; ?>">
+                                    <li>
+                                        <?php if( is_array( $wp_registered_sidebars ) ): ?>
+                                            <select id="primary-slug" name="primary_sidebar_slug">
+                                                <?php foreach( $wp_registered_sidebars as $slug => $sidebar ):?>
+                                                    <option value="<?php echo $slug . '"' . selected( $slug, $sb_group, false ); ?>">
+                                                        <?php  echo $sidebar['name']; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        <?php else: ?>
+                                            It appears you have no sidebars registered with this theme.
+                                        <?php endif; ?>
+                                    </li>
+				</ul>
+			</li>
+                        <li class="add-replace">
+                            <input type="checkbox" id="addrplce" name="add2sidebar" value="add2chk"<?php echo $add2chk; ?>/>
+                            <label for="addrplce">Add to sidebar rather than replace: <label>
+                            <ul class="sidebar-add <?php echo $add2sb ? '' : ' hidden-h'; ?>">
+                                <li>
+                                    <label>
+                                        <input type="radio" name="pre-append" value="prepend"<?php echo $prepend ? ' checked="checked"' : ''  ?>/>
+                                        Prepend Sidebar (before)
+                                    </label>
+				</li>
+				<li>
+                                    <label>
+                                        <input type="radio" name="pre-append" value="append"<?php echo !$prepend ? ' checked="checked"' : ''  ?>/>
+					Append Sidebar (after)
+                                    </label>
+				</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
         <?php
     }
     
@@ -171,11 +177,17 @@ class DGPageSidebarCustom{
     public function save_custom_page_meta(){
         if ( defined('DOING_AJAX') ) return;
         global $post;
-		$sb_group = ( $_POST['customsb'] == 'group' ) ? $_POST['primary_sidebar_slug'] : false;
-        update_post_meta( $post->ID, 'is_custom', $_POST['is-custom'] );
-        update_post_meta( $post->ID, 'add2sidebar', $_POST['add2sidebar'] );
-        update_post_meta( $post->ID, 'prepend_to_sidebar', $_POST['pre-append'] );
-        update_post_meta( $post->ID, 'use_sidebar_group', $sb_group );
+        if (array_key_exists('customsb', $_POST)){
+            $sb_group = ( $_POST['customsb'] == 'group' ) ? $_POST['primary_sidebar_slug'] : false;
+            if (array_key_exists('is-custom', $_POST)){
+                update_post_meta( $post->ID, 'is_custom', $_POST['is-custom'] );
+            }
+            if (array_key_exists('add2sidebar', $_POST)){
+                update_post_meta( $post->ID, 'add2sidebar', $_POST['add2sidebar'] );
+            }
+            update_post_meta( $post->ID, 'prepend_to_sidebar', $_POST['pre-append'] );
+            update_post_meta( $post->ID, 'use_sidebar_group', $sb_group );
+        }
     }
     
     public function build_sidebars(){
@@ -265,7 +277,9 @@ class DGPageSidebarCustom{
         $home_slug = 'home';
         $home_slug = apply_filters( 'page-sidebar-homeslug', $home_slug );
         $pg = get_page_by_path( $home_slug );
-        return $pg->ID;
+        if ($pg){
+            return $pg->ID;
+        }
     }
     
     protected function get_pages(){

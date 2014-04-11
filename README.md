@@ -1,9 +1,9 @@
 # Simple Page Specific Sidebars #
-**Contributors:** dgilfoy, ivycat, sewmyheadon  
+**Contributors:** dgilfoy, ivycat, sewmyheadon, pjackson1972  
 **Donate link:** http://www.ivycat.com/contribute/  
 **Tags:** page, widgets, sidebar, role based  
 **Requires at least:** 3.0  
-**Tested up to:** 3.4  
+**Tested up to:** 3.9-RC1
 **Stable tag:** 2.14.1  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  

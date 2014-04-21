@@ -34,7 +34,7 @@ if( !defined( 'DGSIDEBAR_URL' ) ) define( 'DGSIDEBAR_URL', str_replace( ABSPATH,
 
 class DGPageSidebarCustom{
     
-    protected $home_id;
+    //protected $home_id;
     protected $widget_name;
     protected $my_page_id; //grab the page id and keep it handy
     
@@ -79,21 +79,21 @@ class DGPageSidebarCustom{
     }
     
     public function page_sidebar_settings_save(){
-        update_option( 'page_sidebar_home_id', trim( $_POST['home_page_id'] ) );
+        //update_option( 'page_sidebar_home_id', trim( $_POST['home_page_id'] ) );
         update_option( 'page_sidebar_widget_name', trim( $_POST['primary_sidebar_slug'] )  );
         self::set_opts();
     }
     
     public function set_opts(){
-        $this->home_pg_id = ( $home = get_option( 'page_sidebar_home_id' ) ) ? $home : self::home_pg_id();
-		global $wp_registered_sidebars;
-		$sidebar = '';
-		foreach( $wp_registered_sidebars as $slug => $data ){
-			if( !preg_match( '`page-sidebar-`', $slug ) ){
-				$sidebar = $slug;
-				break;
-			}
-		}
+        //$this->home_pg_id = ( $home = get_option( 'page_sidebar_home_id' ) ) ? $home : self::home_pg_id();
+        global $wp_registered_sidebars;
+        $sidebar = '';
+        foreach( $wp_registered_sidebars as $slug => $data ){
+                if( !preg_match( '`page-sidebar-`', $slug ) ){
+                        $sidebar = $slug;
+                        break;
+                }
+        }
         $this->widget_name = ( $widget = get_option( 'page_sidebar_widget_name' ) ) ? trim( $widget ) : $sidebar;
     }
     

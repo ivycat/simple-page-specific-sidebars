@@ -46,6 +46,7 @@ class DGPageSidebarCustom{
         add_action( 'save_post' , array( $this, 'save_custom_page_meta' ) );
         add_filter( 'sidebars_widgets', array( $this, 'hijack_sidebar' ) );
         add_action( 'admin_menu', array($this, 'options_page_init') );
+        add_action( 'admin_notices', array($this, 'check_primary_sidebar'));
     }
     
 /**
@@ -54,7 +55,7 @@ class DGPageSidebarCustom{
     public function options_page_init(){
         if( !current_user_can( 'administrator' ) ) return;
         $hooks = array();
-		$hooks[] = add_options_page( __( 'Page Sidebar Settings' ), __( 'Page Sidebar Settings' ), 'read', 'page-sidebar-settings', array( $this, 'option_page' ) );
+	$hooks[] = add_options_page( __( 'Page Sidebar Settings' ), __( 'Page Sidebar Settings' ), 'read', 'page-sidebar-settings', array( $this, 'option_page' ) );
          foreach( $hooks as $hook ) add_action( "admin_print_styles-{$hook}", array($this, 'load_assets' ) );
     }
     
@@ -65,8 +66,11 @@ class DGPageSidebarCustom{
     
     public function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
         if ( is_plugin_active( $plugin_file ) )
-            $actions[] = '<a href="' . admin_url('options-general.php?page=page-sidebar-settings') . '">' . __( 'Settings & Help', 'page-sidebar-settings' ) . '</a>';
+            $actions[] = '<a href="' . $this->get_settings_url() . '">' . __( 'Settings & Help', 'page-sidebar-settings' ) . '</a>';
         return $actions;
+    }
+    private function get_settings_url(){
+        return admin_url('options-general.php?page=page-sidebar-settings');
     }
   
 /**
@@ -74,7 +78,8 @@ class DGPageSidebarCustom{
 */
     public function option_page(){
         if( $_SERVER['REQUEST_METHOD'] == 'POST' ) self::page_sidebar_settings_save();
-		global $wp_registered_sidebars;
+        
+        global $wp_registered_sidebars;
         require_once 'assets/page-sidebar-options-view.php';
     }
     
@@ -82,11 +87,20 @@ class DGPageSidebarCustom{
         //update_option( 'page_sidebar_home_id', trim( $_POST['home_page_id'] ) );
         update_option( 'page_sidebar_widget_name', trim( $_POST['primary_sidebar_slug'] )  );
         self::set_opts();
+        
+        //check to see if we need to flash the nag message.
+        //Case: user selects the deselects (selects the null option) for the primary sidebar
+        $this->check_primary_sidebar();
     }
     
     public function set_opts(){
+        //killing the home page special behaviors.  pjackson 2014-04-16
         //$this->home_pg_id = ( $home = get_option( 'page_sidebar_home_id' ) ) ? $home : self::home_pg_id();
-        global $wp_registered_sidebars;
+        
+        //below sets primary widget to the selected option if available, otherwise guesses at the primary widget.
+        //Let's kill this, and whine if no option has been set.  This yields more predictable behavior.
+        //pjackson 2014-04-22
+        /*global $wp_registered_sidebars;
         $sidebar = '';
         foreach( $wp_registered_sidebars as $slug => $data ){
                 if( !preg_match( '`page-sidebar-`', $slug ) ){
@@ -95,6 +109,10 @@ class DGPageSidebarCustom{
                 }
         }
         $this->widget_name = ( $widget = get_option( 'page_sidebar_widget_name' ) ) ? trim( $widget ) : $sidebar;
+         */
+        
+        $this->widget_name = get_option( 'page_sidebar_widget_name' );
+        
     }
     
     public function add_page_meta_box(){
@@ -327,4 +345,18 @@ class DGPageSidebarCustom{
         $pages = get_posts( array( 'post_type'=>'page', 'numberposts'=>-1, 'orderby'=>'post_title', "meta_key"=>"is_custom", "meta_value"=>"y" ) );
         return $pages;
     }
+    
+    /**
+     * Check to see whether the primary sidebar is selected.  Nag if not.
+     * If the primary_sidebar_slug is present in a POST, then the primary sidebar
+     * is in the act of being set (but the option hasn't been saved yet), so don't nag.
+     */
+    public function check_primary_sidebar(){
+
+        if ( (!isset($_POST['primary_sidebar_slug']) || !$_POST['primary_sidebar_slug']) && !get_option( 'page_sidebar_widget_name' ) ){
+            echo "<div class='updated'><p>You're almost ready to use Page Specific Sidebars.  Please go to the <a href='" . $this->get_settings_url() . "'>Plugin Settings</a> page, and select the Primary Sidebar.</p></div>";
+        }
+    }
+    
+    
 } new DGPageSidebarCustom();

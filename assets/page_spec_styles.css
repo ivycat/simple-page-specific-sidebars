@@ -244,9 +244,18 @@
     margin-bottom: 0px;
     text-align: center;
 }
+
+/** Settings Tab **/
+
 #page-specific-sidebar-settings .settings{
     padding: 10px;
 }
+#page-specific-sidebar-settings .non-option {
+    color: #999999;
+    font-style: italic;
+}
+
+
 
 
 /** Help Tab **/

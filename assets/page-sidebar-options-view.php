@@ -3,9 +3,6 @@
     <h2>Page Specific Sidebar Plugin</h2>
     <div id="body-wrap" class="meta-box-sortables ui-sortable">
         <div id="metabox_desc" class="postbox">
-            <div class="handlediv" title="Click to toggle">
-                <br>
-            </div>
             <div class="hndle">
                 <h3><ul class="top-menu clearfix">
                     <li class="current-menu-tab menu-item"><a href="#settings">Settings</a></li>
@@ -13,24 +10,28 @@
                 </ul></h3>
             </div>
             <div class="group settings current-tab inside">
-                <?php if( $_SERVER['REQUEST_METHOD'] == "POST" ) echo "<div id='message' class='updated'>Page Sidebars Settings Successfully Saved!</div>"; ?>
+                <?php if( $_SERVER['REQUEST_METHOD'] == "POST" ) echo "<div id='message' class='updated'><p>Page Sidebars Settings Successfully Saved!</p></div>"; ?>
                 <?php //parent::fprint_r( $this->valid->all_formdata() ); ?>
                 <form action="" method="post">
                     <ul>
                         <li><label for="primary-slug">Primary Sidebar</label></li>
+                        <li>Please select the Primary Sidebar to be customized on the pages you specify.</li>
                         <li><?php
                             if( is_array( $wp_registered_sidebars ) ): ?>
-                                <select id="primary-slug" name="primary_sidebar_slug"><?php
+                            
+                                <select id="primary-slug" name="primary_sidebar_slug">
+                                    <option class="non-option" value="" <?php if( !$this->widget_name ) echo "selected"; ?>>Select Primary Sidebar</option>
+                                    <?php
                                     foreach( $wp_registered_sidebars as $slug => $sidebar ):
                                         if( !preg_match( '`page-sidebar-`', $slug ) ): ?>
-                                            <option value="<?php echo $slug . '"' . selected( $slug, $this->widget_name, false ); ?>"><?php
+                                            <option value="<?php echo $slug ?>" <?php echo selected( $slug, $this->widget_name, false ); ?>><?php
                                                 echo $sidebar['name']; ?>
                                             </option><?php
                                         endif;
                                     endforeach; ?>
                                 </select><?php
                             else: ?>
-                                It appears you have no sidebars registered with this theme.<?php
+                                It appears you have no sidebars registered with this theme.  There must be at least one sidebar to use this plugin.<?php
                             endif; ?>
                         </li>
                         <!--<li><label for="home-id">Home Page ID *</label></li>

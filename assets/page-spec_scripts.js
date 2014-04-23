@@ -24,8 +24,20 @@
      $addrplce = $custom_sidebar.find( '#addrplce' );                       //"add or replace sidebar" checkbox
      $sidebar_add = $custom_sidebar.find( '.sidebar-add' );                 //hidden content ul
      
+     $select_primary = $('select#primary-slug');                            //Dropdown for selecting the primary sidebar
      
      
+     //Perform default style-setting behavior on primary sidebar selector
+     setSelectOnVal($select_primary);
+     
+     //Attach style-setting behavior to the change event of the primary sidebar selector
+     $select_primary.change( function(){
+         setSelectOnVal($select_primary);
+     })
+     
+     
+     
+     //Attach behaviors to the plugin settings tabs
     $( '#page-specific-sidebar-settings .top-menu li a' ).click( function(){
         var toshow = $( this ).attr( 'href' ).replace( '#', '' );
         $( '.top-menu li' ).removeClass( 'current-menu-tab' );
@@ -34,8 +46,6 @@
         $( '.' + toshow ).show().addClass( 'current-tab' );
         return false;
     } );
-    
-    
     
     
     //checkbox state may differ depending on browser when page is refreshed,
@@ -72,5 +82,28 @@
         $sidebar_add.toggle();
     });
 
+
+    /**
+     * 
+     * Given a Select element, assume options with no value are "non-options":
+     * options not intended to be selected, but that are not disabled.
+     * Set the non-option's style, and makes sure all other options are set to the default.
+     * 
+     * @param {type} $element
+     * @returns {undefined}
+     */
+    function setSelectOnVal($element){
+         if (!$element.val()){
+             $element.css("color", "#999999")
+                     .css("font-style", "italic");
+             $element.find("option").css("color", "#333333")
+                     .css("font-style", "normal");
+             $element.find("option[value=]").css("color", "#999999")
+                     .css("font-style", "italic");
+         } else { //unset the color
+             $element.css("color","#333333")
+                     .css("font-style","normal");
+         }
+     }
     
 });

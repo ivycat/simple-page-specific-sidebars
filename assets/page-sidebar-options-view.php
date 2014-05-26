@@ -14,9 +14,8 @@
                 <?php //parent::fprint_r( $this->valid->all_formdata() ); ?>
                 <form action="" method="post">
                     <ul>
-                        <li><label for="primary-slug">Primary Sidebar</label></li>
-                        <li>Please select the Primary Sidebar to be customized on the pages you specify.</li>
-                        <li><?php
+                        <li><label for="primary-slug">Primary Sidebar</label>
+                            <?php
                             if( is_array( $wp_registered_sidebars ) ): ?>
                             
                                 <select id="primary-slug" name="primary_sidebar_slug">
@@ -34,10 +33,18 @@
                                 It appears you have no sidebars registered with this theme.  There must be at least one sidebar to use this plugin.<?php
                             endif; ?>
                         </li>
+                        <li>Please select the Primary Sidebar to be customized on the pages you specify.</li>
+
+                        <li>&nbsp;</li>
+                        <li><input id="is-global-inheritance" type="checkbox" name="is-global-inheritance" <?php checked( get_option('page-specific-sidebars-is-global-inheritance'), 'true' )?> value="true">
+                            <label>Child Pages Inherit Sidebars By Default</label></li>
+                        <li>When checked, child pages will inherit the sidebar behavior used by their parent.  
+                            This setting may be overridden for each individual page.</li>
+                        
                         <!--<li><label for="home-id">Home Page ID *</label></li>
                         <li><input id="home-id" type="text" name="home_page_id" value="<?php //echo $this->home_pg_id; ?>"/></li>
                         <li>* - Home page with blog posts have issues with the page ID being overridden.  This ensures that the right page ID is being used. (optional)</li>-->
-                        <li><button type="submit" name="save_page_data">Update Settings</button></li>
+                        <li><?php submit_button(); ?></li>
                     </ul>
                 </form>
             </div>

@@ -209,9 +209,21 @@
 #mc_embed_signup label.error {
     display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;
     }
+    
+    
+/*****************************************************************************/
+/** Edit Page Meta Box **/
+/*****************************************************************************/
+
+
 #custom-sidebar{
 	padding: 5px;
 }
+
+#custom-sidebar .disabled{
+    color: #aaaaaa !important;
+}
+
 .hidden-h{
 	display:none;
 }
@@ -244,6 +256,8 @@
     margin-bottom: 0px;
     text-align: center;
 }
+
+#page-specific-sidebar-settings label { font-weight: bold; }
 
 /** Settings Tab **/
 

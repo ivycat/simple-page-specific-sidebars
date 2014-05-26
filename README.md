@@ -1,10 +1,10 @@
 # Simple Page Specific Sidebars #
-**Contributors:** dgilfoy, ivycat, sewmyheadon  
+**Contributors:** dgilfoy, ivycat, sewmyheadon, pjackson1972  
 **Donate link:** http://www.ivycat.com/contribute/  
 **Tags:** page, widgets, sidebar, role based  
 **Requires at least:** 3.0  
-**Tested up to:** 3.4  
-**Stable tag:** 2.14.1  
+**Tested up to:** 3.9-RC1
+**Stable tag:** 2.15
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -16,11 +16,14 @@ Page Specific Sidebars adds a checkbox to every page allowing you to choose whic
 
 Once you enable a page-specific sidebar in the page editor, a widget area will automatically be created for that page and you can customize it as you like.  
 
-You can also specify whether the plugin replaces your generic sidebar with the page-specific sidebar, or simply adds your page-specific sidebar on to the existing sidebar.
+You can specify whether the plugin replaces your primary sidebar with the page-specific sidebar, or adds your page-specific sidebar to the existing sidebar.
+
+For child pages, you can choose to inherit the parent's settings.  When a child page inherits its parent's settings, that child page will not have its own custom sidebar.  Default inheritance behavior can be set via the plugin settings page.
+
 
 ## Notes ##
 
-Plugin has no built-in styling does not contain native styles; it's meant to use the styles of your existing theme.
+Plugin has no built-in styling, and does not contain native styles; it is uses the styles from your existing theme.
 
 This is a minimal plugin, placing function over form.  If you would like to extend it, or would like us to extend it in later versions, feel free to [contact us](http://www.ivycat.com/contact/), or post feedback in this plugin's [support forum]().
 
@@ -43,23 +46,15 @@ $priority = apply_filters( 'page_sidebar_priority', 'high' );`
 
 These allow you to change the location and priority of the metabox on the "Edit Page" view.
 
-`$home_slug = apply_filters( 'page-sidebar-homeslug', $home_slug )`
-
-Use this filter if your home page slug is different from "home" : 
-
-**NOTE:** Any page that has a custom loop pulling in multiple posts will throw this plugin off.  For some reason it always outputs the post ID as the last  
-post output on the page.  Also, the homepage is most likely the latest blog posts in WordPress so I created a check.  It will get the Home page ID and 
-use the Home page ID to get its sidebar. (uses is_frontpage() ) to check.
-
 Contact us if you want some more filters or actions added.  http://www.ivycat.com/contact
 
 ## Screenshots ##
 
 ###1. Selecting a page to have a unique sidebar is as easy as clicking a button - Also, check if you just want to merge the new sidebar with the old.###
-![Selecting a page to have a unique sidebar is as easy as clicking a button - Also, check if you just want to merge the new sidebar with the old.](http://s.wordpress.org/extend/plugins/simple-page-specific-sidebars/screenshot-1.png)
+![Selecting a page to have a unique sidebar is as easy as clicking a button - Also, check if you just want to merge the new sidebar with the old.](http://s.wordpress.org/extend/plugins/simple-page-specific-sidebars/assets/custom_page_option_checked.png)
 
 ###2. Your new sidebars show up under widgets.  No need to clutter up the Page editor.###
-![Your new sidebars show up under widgets.  No need to clutter up the Page editor.](http://s.wordpress.org/extend/plugins/simple-page-specific-sidebars/screenshot-2.png)
+![Your new sidebars show up under widgets.  No need to clutter up the Page editor.](http://s.wordpress.org/extend/plugins/simple-page-specific-sidebars/assets/new_page_specific_sidebar_widget_area.png)
 
 
 ## Frequently Asked Questions ##
@@ -69,6 +64,18 @@ Contact us if you want some more filters or actions added.  http://www.ivycat.co
 Some of our clients need the ability to easily create, and edit sidebars on a per-page basis using widgets.  This is our solution, and we hope it helps others too. :)
 
 ## Changelog ##
+
+### 2.15 ###
+* New Feature: Inherit Parent Settings - When a page has a parent, it may inherit the Page Specific Sidebar behavior defined for its parent.
+
+### 2.14.2 ###
+
+* Update: compatible with WP 3.9.x
+* Update: revised instructions & screenshots
+* Bug fixes: Fixed checkbox JS behavior
+* Bug fixes: Fixed issues with selection storage
+* Bug fixes: Fixed failure to work on Home page
+* Bug fixes: Fixed failure to work on pages with additional post loops
 
 ### 2.14.1 ###
 * Bug fixes updated JS & CSS.

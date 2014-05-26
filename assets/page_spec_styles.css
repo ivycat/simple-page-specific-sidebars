@@ -140,35 +140,7 @@
     font-size: 21px;
     font-weight: bold;
 }
-#page-specific-sidebar-settings #body-wrap{
-    width: 55%;
-    float:left;
-}
-#page-specific-sidebar-settings #sidebar-wrap{
-    width: 35%;
-    float:left;
-    margin: 25px 0 0 20px;
-}
-#page-specific-sidebar-settings .top-menu{
-    width: 100%;
-}
-#page-specific-sidebar-settings .top-menu li:first-child{
-    border-right: 1px groove;
-}
-#page-specific-sidebar-settings .top-menu li{
-    width: 47%;
-    float: left;
-    margin-bottom: 0px;
-    text-align: center;
-}
-#page-specific-sidebar-settings .settings{
-    padding: 10px;
-}
-#page-specific-sidebar-settings .help{
-    margin-top: 20px;
-    padding: 10px;
-    display:none;
-}
+
 .clearfix:before, .clearfix:after {
     content: ""; display: table;
     }
@@ -237,9 +209,21 @@
 #mc_embed_signup label.error {
     display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;
     }
+    
+    
+/*****************************************************************************/
+/** Edit Page Meta Box **/
+/*****************************************************************************/
+
+
 #custom-sidebar{
 	padding: 5px;
 }
+
+#custom-sidebar .disabled{
+    color: #aaaaaa !important;
+}
+
 .hidden-h{
 	display:none;
 }
@@ -247,3 +231,67 @@
 	margin-left: 15px;
 }
 
+/***************************************************************************/
+/** Plugin Settngs **/
+/***************************************************************************/
+
+#page-specific-sidebar-settings #body-wrap{
+    width: 55%;
+    float:left;
+}
+#page-specific-sidebar-settings #sidebar-wrap{
+    width: 35%;
+    float:left;
+    margin: 25px 0 0 20px;
+}
+#page-specific-sidebar-settings .top-menu{
+    width: 100%;
+}
+#page-specific-sidebar-settings .top-menu li:first-child{
+    border-right: 1px groove;
+}
+#page-specific-sidebar-settings .top-menu li{
+    width: 47%;
+    float: left;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+#page-specific-sidebar-settings label { font-weight: bold; }
+
+/** Settings Tab **/
+
+#page-specific-sidebar-settings .settings{
+    padding: 10px;
+}
+#page-specific-sidebar-settings .non-option {
+    color: #999999;
+    font-style: italic;
+}
+
+
+
+
+/** Help Tab **/
+
+
+#page-specific-sidebar-settings h3 {
+    margin: 20px 0 10px;
+}
+#page-specific-sidebar-settings .help{
+    margin-top: 20px;
+    padding: 10px;
+    display:none;
+}
+#page-specific-sidebar-settings .img-wrapper{
+    width: 100%;
+    text-align:center;
+}
+#page-specific-sidebar-settings img{
+    border: #333333 1px solid;
+    max-width: 100%;
+}
+
+#page-specific-sidebar-settings .group {
+    overflow: scroll;
+}
